@@ -19,3 +19,7 @@ The code above uses the Google CDN to fetch Prototype.js. For performance reason
     slideshow.start();
     
 More coming soon.
+
+# Demo
+
+Demo coming soon.
