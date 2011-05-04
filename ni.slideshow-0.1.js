@@ -320,6 +320,7 @@ var NI = new function() {
       if($(nextButton) != null) {
         $(nextButton).observe('click', function(event) {
           $(slideshow.slideshowContainer).fire(name);
+          event.stop();
         });
       }
     }
@@ -344,6 +345,7 @@ var NI = new function() {
       if($(previousButton) != null) {
         $(previousButton).observe('click', function(event) {
           $(slideshow.slideshowContainer).fire(name);
+          event.stop();
         });
       }
     }
