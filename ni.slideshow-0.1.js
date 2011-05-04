@@ -54,7 +54,7 @@ var NI = new function() {
       transitionDuration: 2,
       nextButton: '',
       previousButton: '',
-      pauseOnMouseover: true
+      pauseOnMouseover: false
     },
     
     // Lets users of the class add their own defaults to all slideshows.
