@@ -20,8 +20,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var oldNI = { }
-if(NI != undefined) {
+var oldNI = { };
+if(NI !== undefined) {
   oldNI = NI;
 }
 
@@ -30,7 +30,7 @@ var NI = new function() {
     initialize: function(options) {
       this.defaultOptions = Object.clone(NI.SlideshowConfig.defaultOptions);
       
-      if(typeof(options) == 'object') {
+      if(typeof(options) === 'object') {
         this.options = options;
       }
       else {
@@ -67,7 +67,7 @@ var NI = new function() {
   this.Slideshow = Class.create({
     initialize: function(containerElement, options) {
       this.slideshowContainer = containerElement;
-      this.slides = new Array();
+      this.slides = [];
       this.config = new NI.SlideshowConfig(options);
       this.timer = 0;
       
@@ -83,12 +83,12 @@ var NI = new function() {
     },
     
     getValidSlides: function(slideElements) {
-      var validSlides = new Array();
-      for(var index = 0; index < slideElements.length; index++) {
+      var validSlides = [];
+      for(index = 0; index < slideElements.length; index++) {
         var slideElement = new NI.Slide(slideElements[index]);
         validSlides.push(slideElement);
-    	}
-    	return validSlides;
+      }
+      return validSlides;
     },
     
     updateSlideshowDuration: function() {
@@ -96,21 +96,21 @@ var NI = new function() {
     },
     
     start: function() {
-    	this.hideSlides();
-    	
-    	NI.SlideshowContainer.addSlideshow(this);
-    	
-    	NI.SlideshowTimerHandler.startTimers();
-    	this.setStateTo(NI.Slideshow.STARTED);
-    	
-    	this.eventHandler = new NI.SlideshowEventHandler(this);
+      this.hideSlides();
+      
+      NI.SlideshowContainer.addSlideshow(this);
+      
+      NI.SlideshowTimerHandler.startTimers();
+      this.setStateTo(NI.Slideshow.STARTED);
+      
+      this.eventHandler = new NI.SlideshowEventHandler(this);
     },
     
     hideSlides: function() {
       this.slides.each(function(slide) {
-    	  slide.toggle();
-    	  slide.visible = false;
-    	});
+        slide.toggle();
+        slide.visible = false;
+      });
     },
     
     getOption: function(option) {
@@ -122,7 +122,7 @@ var NI = new function() {
     },
     
     isStopped: function() {
-      return (this.state == NI.Slideshow.STOPPED);
+      return (this.state === NI.Slideshow.STOPPED);
     },
     
     isRunning: function() {
@@ -130,11 +130,11 @@ var NI = new function() {
     },
     
     isPaused: function() {
-      return (this.state == NI.Slideshow.PAUSED);
+      return (this.state === NI.Slideshow.PAUSED);
     },
     
     isNotStarted: function() {
-      return (this.state == NI.Slideshow.NOT_STARTED);
+      return (this.state === NI.Slideshow.NOT_STARTED);
     },
     
     isNotRunning: function() {
@@ -159,7 +159,7 @@ var NI = new function() {
     
     showNextWhileAnimating: function(index) {
       this.slides[index].disappear();
-      if(this.slides[index + 1] != undefined) {
+      if(this.slides[index + 1] !== undefined) {
         this.slides[index + 1].appear();
       }
       else {
@@ -169,7 +169,7 @@ var NI = new function() {
     
     showNextWhileNotAnimating: function(index) {
       this.slides[index + 1].disappear();
-      if(this.slides[index + 1] != undefined) {
+      if(this.slides[index + 1] !== undefined) {
         this.slides[index + 1].appear();
       }
       else {
@@ -191,7 +191,7 @@ var NI = new function() {
     
     showPreviousWhileAnimating: function(index) {
       this.slides[index].disappear();
-      if(this.slides[index - 1] != undefined) {
+      if(this.slides[index - 1] !== undefined) {
         this.slides[index - 1].appear();
       }
       else {
@@ -201,7 +201,7 @@ var NI = new function() {
     
     showPreviousWhileNotAnimating: function(index) {
       this.slides[index].disappear();
-      if(this.slides[index - 1] != undefined) {
+      if(this.slides[index - 1] !== undefined) {
         this.slides[index - 1].appear();
       }
       else {
@@ -212,16 +212,16 @@ var NI = new function() {
     orderSlidesByVisibility: function() {
       var visibleSlideIndex = 0;
       this.slides.each(function(slide, index) {
-    		if(slide.isVisible()) {
-    		  visibleSlideIndex = index;
-    		}
-    	});
+        if(slide.isVisible()) {
+          visibleSlideIndex = index;
+        }
+      });
       
       // Shift hidden slides from beginning of array to get visible slide first
-    	for(index = 0; index < visibleSlideIndex; index++) {
-    	  var slide = this.slides.shift();
-    	  this.slides.push(slide);
-    	}
+      for(index = 0; index < visibleSlideIndex; index++) {
+        var slide = this.slides.shift();
+        this.slides.push(slide);
+      }
     }
   });
   
@@ -258,7 +258,7 @@ var NI = new function() {
     },
     
     isNotAnimating: function() {
-      return (this.element.getStyle("opacity") == 1 || this.element.getStyle("opacity") == 0)
+      return (this.element.getStyle("opacity") === 1 || this.element.getStyle("opacity") === 0);
     }
   });
   
@@ -269,7 +269,7 @@ var NI = new function() {
       
       var eventHandler = this;
       NI.SlideshowEventHandler.events.each(function(event) {
-        if(event.slideshow == slideshow.slideshowContainer) {
+        if(event.slideshow === slideshow.slideshowContainer) {
           eventHandler.setUpEvent(event, slideshow);
         }
       });
@@ -317,7 +317,7 @@ var NI = new function() {
       var nextButton = slideshow.getOption("nextButton");
       var name = this.eventName;
       
-      if($(nextButton) != null) {
+      if($(nextButton) !== null) {
         $(nextButton).observe('click', function(event) {
           $(slideshow.slideshowContainer).fire(name);
           event.stop();
@@ -342,7 +342,7 @@ var NI = new function() {
       var previousButton = slideshow.getOption("previousButton");
       var name = this.eventName;
 
-      if($(previousButton) != null) {
+      if($(previousButton) !== null) {
         $(previousButton).observe('click', function(event) {
           $(slideshow.slideshowContainer).fire(name);
           event.stop();
@@ -412,7 +412,7 @@ var NI = new function() {
   
   Object.extend(this.SlideshowTimerHandler, {
     startTimers: function(slideshow) {
-      if(slideshow == undefined) {
+      if(slideshow === undefined) {
         NI.SlideshowTimerHandler.setAllTimers();
       }
       else if(slideshow.isPaused()) {
@@ -425,36 +425,36 @@ var NI = new function() {
       var duration = slideshow.slideshowDuration * 1000;
       
       NI.SlideshowTimerHandler.setSlideTimers(slideshow.getElementId());
-    	slideshow.timer = setInterval("NI.SlideshowTimerHandler.setSlideTimers('" + slideshow.getElementId() + "')", duration);
+      slideshow.timer = setInterval("NI.SlideshowTimerHandler.setSlideTimers('" + slideshow.getElementId() + "')", duration);
     },
     
     setSlideTimers: function(slideshowId) {
       var slideshow = NI.SlideshowContainer.getSlideshowById(slideshowId);
       
       slideshow.slides.each(function(slide, index) {
-    		NI.SlideshowTimerHandler.setAppearTimer(slideshow, index);
-    		NI.SlideshowTimerHandler.setDisappearTimer(slideshow, index);
-    	});
+        NI.SlideshowTimerHandler.setAppearTimer(slideshow, index);
+        NI.SlideshowTimerHandler.setDisappearTimer(slideshow, index);
+      });
     },
     
     setAppearTimer: function(slideshow, index) {
       var duration = index * ((slideshow.getOption("slideDuration") * 1000));
       slideshow.slides[index].appearTimer = setTimeout(function(){
-    		slideshow.slides[index].appear({ duration: slideshow.getOption("transitionDuration") });
-    	}, duration);
+        slideshow.slides[index].appear({ duration: slideshow.getOption("transitionDuration") });
+      }, duration);
     },
     
     setDisappearTimer: function(slideshow, index) {
-      duration = ((index + 1) * ((slideshow.getOption("slideDuration") * 1000) - slideshow.getOption("slideDuration")))
-    	slideshow.slides[index].disappearTimer = setTimeout(function(){
-    		slideshow.slides[index].disappear({ duration: slideshow.getOption("transitionDuration") });
-    	}, duration);
+      duration = ((index + 1) * ((slideshow.getOption("slideDuration") * 1000) - slideshow.getOption("slideDuration")));
+      slideshow.slides[index].disappearTimer = setTimeout(function(){
+        slideshow.slides[index].disappear({ duration: slideshow.getOption("transitionDuration") });
+      }, duration);
     },
     
     setAllTimers: function() {
       var slideshows = NI.SlideshowContainer.getSlideshows();
 
-      for(var index = 0; index < slideshows.length; index++) {
+      for(index = 0; index < slideshows.length; index++) {
         var slideshow = slideshows[index];
         
         if(slideshow.isNotStarted()) {
@@ -479,7 +479,7 @@ var NI = new function() {
     slideshows: [],
     
     addSlideshow: function(slideshow) {
-      if(typeof(slideshow) != undefined) {
+      if(typeof(slideshow) !== undefined) {
         NI.SlideshowContainer.slideshows.push(slideshow);
       }
     },
@@ -491,7 +491,7 @@ var NI = new function() {
     getSlideshowById: function(containerId) {
       var slideshows = NI.SlideshowContainer.getSlideshows();
 
-      for(var index = 0; index < slideshows.length; index++) {
+      for(index = 0; index < slideshows.length; index++) {
         if(slideshows[index].getElementId() == containerId) {
           return slideshows[index];
         }
@@ -500,6 +500,6 @@ var NI = new function() {
   });
 };
 
-if(oldNI != { }) {
+if(oldNI !== { }) {
   NI = Object.extend(oldNI, NI);
 }
